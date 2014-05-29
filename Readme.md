@@ -1,7 +1,7 @@
 ## Express Init
 
 This Node.JS utility module initializes Express 4.x middleware and calls back when initialization is complete. This allows
-your middleware to perform some asynchronous initialization in your middleware before the server starts.
+your middleware to perform some asynchronous initialization before the server starts.
 
 [![Build Status](https://travis-ci.org/activeprospect/express-init.svg)](https://travis-ci.org/activeprospect/express-init)
 
