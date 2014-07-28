@@ -13,7 +13,10 @@ recurseStack = (app, stack) ->
       init = layer.init or layer.handle?.init
       if init
         (callback) ->
-          init app, callback
+          return callback() if init.done == true
+          init app, (err) ->
+            init.done = !err
+            callback(err)
 
   _(s).flatten().compact().valueOf()
 

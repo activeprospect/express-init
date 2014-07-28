@@ -8,7 +8,8 @@ your middleware to perform some asynchronous initialization before the server st
 ## Usage
 
 Your middleware must implement the `init` function, which accepts two parameters: the `app` instance and a `callback`.
-When your middleware is finished initializing, call the callback.
+When your middleware is finished initializing, invoke the callback with an error if one occurred. A middleware's init
+function will only be called once, even if the middleware is used multiple times in the same app.
 
 ```javascript
 var initialize = require('express-init');
