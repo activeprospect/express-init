@@ -56,6 +56,36 @@ describe 'Init', ->
       assert.deepEqual app.initialized, [middleware1, middleware2]
       done()
 
+
+  it 'should process routers', (done) ->
+    router = new express.Router()
+    router.init = (app, callback) ->
+      app.initialized.push(router)
+      callback()
+    app.use router
+
+    init app, (err) ->
+      return done(err) if err
+      assert.deepEqual app.initialized, [router]
+      done()
+
+
+  it 'should process nested routers', (done) ->
+    nestedRouter = new express.Router()
+    nestedRouter.init = (app, callback) ->
+      app.initialized.push(nestedRouter)
+      callback()
+
+    router = new express.Router()
+    router.use nestedRouter
+    app.use router
+
+    init app, (err) ->
+      return done(err) if err
+      assert.deepEqual app.initialized, [nestedRouter]
+      done()
+
+
   it 'should process middlewares of nested routers', (done) ->
     nestedRouter = new express.Router()
     nestedRouter.use middleware2
