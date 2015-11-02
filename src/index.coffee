@@ -4,6 +4,7 @@ async = require('async')
 
 recurseStack = (app, stack) ->
   stack = [stack] unless _(stack).isArray()
+
   s = stack.map (layer) ->
 
     initializers = []
@@ -17,10 +18,13 @@ recurseStack = (app, stack) ->
     init = layer.init or layer.handle?.init
     if init
       initializers.push (callback) ->
-        return callback() if init.done == true
-        init app, (err) ->
-          init.done = !err
+        return callback() if app[init] == true
+        args = []
+        args.push app if init.length == 2
+        args.push (err) ->
+          app[init] = !err
           callback(err)
+        init.apply(init, args)
 
     initializers
 
