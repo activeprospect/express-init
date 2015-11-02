@@ -100,7 +100,8 @@ describe 'Init', ->
       assert.deepEqual app.initialized, [middleware1, middleware2]
       done()
 
-  it 'should not initialize middleware more than once', (done) ->
+
+  it 'should not initialize middleware more than once for the same app', (done) ->
     middleware = (req, res, next) ->
       next()
     middleware.init = (app, callback) ->
@@ -114,5 +115,24 @@ describe 'Init', ->
       return done(err) if err
       assert.deepEqual app.initialized, [middleware]
       done()
+
+
+  it 'should initialize middleware for each app', (done) ->
+    app.use middleware1
+
+    app2 = express()
+    app2.initialized ?= []
+    app2.use middleware1
+
+    init app, (err) ->
+      return done(err) if err
+      assert.deepEqual app.initialized, [middleware1]
+
+      init app2, (err) ->
+        return done(err) if err
+        assert.deepEqual app2.initialized, [middleware1]
+        done()
+
+
 
 
