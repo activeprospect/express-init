@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/activeprospect/express-init.png?label=ready&title=Ready)](https://waffle.io/activeprospect/express-init)
 ## Express Init
 
 This Node.JS utility module initializes Express 4.x middleware and calls back when initialization is complete. This allows
