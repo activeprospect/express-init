@@ -11,7 +11,7 @@ task 'build', ->
 
 task 'test', ->
   path = 'spec/*-spec.coffee'
-  run "NODE_ENV=test ./node_modules/.bin/mocha #{path} --recursive --compilers coffee:coffee-script/register --reporter spec --colors"
+  run "NODE_ENV=test ./node_modules/.bin/mocha #{path} --recursive --require coffee-script/register --reporter spec --colors"
 
 task 'clean', ->
   run 'rm -fr ./lib'
