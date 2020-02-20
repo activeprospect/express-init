@@ -1,6 +1,6 @@
 assert = require('chai').assert
 express = require('express')
-init = require('../src')
+init = require('../lib')
 
 describe 'Init', ->
 
