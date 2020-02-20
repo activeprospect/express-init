@@ -1,39 +1,31 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const _ = require('lodash');
 const async = require('async');
 
-
-var recurseStack = function(app, stack) {
+const recurseStack = (app, stack) => {
   if (!_(stack).isArray()) { stack = [stack]; }
 
-  const s = stack.map(function(layer) {
-
+  const s = stack.map((layer) => {
     let initializers = [];
 
-    if ((layer.route != null ? layer.route.stack : undefined) != null) {
+    if (layer.route && layer.route.stack) {
       initializers = initializers.concat(recurseStack(app, layer.route.stack));
     }
 
-    if ((layer.handle != null ? layer.handle.stack : undefined) != null) {
+    if (layer.handle && layer.handle.stack) {
       initializers = initializers.concat(recurseStack(app, layer.handle.stack));
     }
 
-    const init = layer.init || (layer.handle != null ? layer.handle.init : undefined);
+    const init = layer.init || (layer.handle && layer.handle.init) || null;
     if (init) {
-      initializers.push(function(callback) {
+      initializers.push((callback) => {
         if (app[init] === true) { return callback(); }
         const args = [];
         if (init.length === 2) { args.push(app); }
-        args.push(function(err) {
+        args.push(function (err) {
           app[init] = !err;
-          return callback(err);
+          callback(err);
         });
-        return init.apply(init, args);
+        init.apply(init, args);
       });
     }
 
@@ -43,8 +35,7 @@ var recurseStack = function(app, stack) {
   return _(s).flatten().compact().valueOf();
 };
 
-
-module.exports = function(app, callback) {
+module.exports = (app, callback) => {
   const initializers = recurseStack(app, app._router.stack);
-  return async.series(initializers, err => callback(err));
+  async.series(initializers, err => callback(err));
 };
