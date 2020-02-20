@@ -8,7 +8,7 @@
     "url": "https://github.com/activeprospect/express-init.git"
   },
   "scripts": {
-    "test": "cake test"
+    "test": "mocha"
   },
   "author": "alex@activeprospect.com",
   "license": "MIT",
