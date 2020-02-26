@@ -7,12 +7,8 @@
     "type": "git",
     "url": "https://github.com/activeprospect/express-init.git"
   },
-  "engines": {
-    "node": ">=0.10.0"
-  },
   "scripts": {
-    "test": "cake test",
-    "prepublish": "cake build"
+    "test": "mocha"
   },
   "author": "alex@activeprospect.com",
   "license": "MIT",
@@ -22,8 +18,13 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "coffee-script": ">= 1.7.0",
-    "mocha": ">= 1.17.0",
-    "chai": ">= 1.9.0"
+    "chai": ">= 1.9.0",
+    "eslint-config-semistandard": "^15.0.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "mocha": ">= 1.17.0"
   }
 }
